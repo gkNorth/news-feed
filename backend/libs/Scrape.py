@@ -24,7 +24,7 @@ class ScrapeNews:
             pageTitle = el.select_one(self.pageTitleTag).text
             pagePath = el.select_one(self.anchorTag).get('href') if el.select_one(self.anchorTag) != None else el.get('href')
             pageLink = pagePath if self.linkType == 1 else '{}{}'.format(self.url, pagePath)
-            pageImg = el.select_one(self.imgTag).get('src') if el.select_one(self.imgTag) else ''
+            pageImg = el.select_one(self.imgTag).get('src') if el.select_one(self.imgTag) else 'https://unsplash.it/200/100?&a'
 
             newsList.append(
                 {
