@@ -1,6 +1,7 @@
 import { IndexState, Feed } from 'types'
 import { MutationTree, GetterTree, ActionTree } from 'vuex'
 import { Client } from '@notionhq/client';
+import dayjs from 'dayjs';
 
 export const state = (): IndexState => ({
   feeds: [] as Feed[],
@@ -31,6 +32,7 @@ export const actions: ActionTree<IndexState, RootState> = {
         page_link: feed.properties.page_link.rich_text[0].plain_text,
         page_img: feed.properties.page_img.rich_text[0].plain_text,
         site_title: feed.properties.site_title.rich_text[0].plain_text,
+        created_at: dayjs(feed.created_time).format("YYYY-MM-DD")
       }
     })
     commit('setFeeds', feeds)

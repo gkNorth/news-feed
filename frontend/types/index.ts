@@ -8,4 +8,5 @@ export interface Feed {
   page_link: string
   page_img: string
   site_title: string
+  created_at: string
 }
