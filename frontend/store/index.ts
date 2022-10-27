@@ -1,12 +1,11 @@
 import { IndexState, Feed } from 'types'
 import { MutationTree, GetterTree, ActionTree } from 'vuex'
 import { Client } from '@notionhq/client';
+export type RootState = ReturnType<typeof state>
 
 export const state = (): IndexState => ({
   feeds: [] as Feed[],
 })
-
-export type RootState = ReturnType<typeof state>
 
 export const getters: GetterTree<IndexState, RootState> = {
   feeds: state => state.feeds,

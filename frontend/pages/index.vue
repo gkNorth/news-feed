@@ -10,20 +10,23 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { mapGetters } from 'vuex'
+import { Component, Vue, Watch } from 'nuxt-property-decorator'
+import { Getter, Action } from 'vuex-class'
+import { Context } from '@nuxt/vue-app'
+import * as Vuex from 'vuex'
 
 interface AsyncData {
   feeds: any
 }
+@Component({})
+export default class IndexPage extends Vue {
+  $store!: Vuex.ExStore
 
-export default Vue.extend({
-  name: 'IndexPage',
-  async asyncData({ store }): Promise<void> {
-    await store.dispatch('fetchFeeds')
-  },
-  computed: {
-    ...mapGetters(['feeds'])
+  @Getter('feeds') feeds!: any
+  @Action('fetchFeeds') fetchFeeds: any
+
+  async asyncData({}) {
+    console.log(this.$store.fetchFeeds())
   }
-})
+}
 </script>
