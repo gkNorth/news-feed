@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2 gap-8 mt-8 md:mt-16 md:grid-cols-3">
+  <div class="grid grid-cols-2 gap-y-2 gap-x-5 mt-3 md:mt-16 md:grid-cols-3 px-6">
     <Card
       v-for="feed in filteredFeedsBySite"
       :key="feed.id"
@@ -18,11 +18,7 @@ export default Vue.extend({
   components: {
     Card,
   },
-  async asyncData({ store }): Promise<void> {
-    await store.dispatch('fetchFeeds')
-  },
   computed: {
-    ...mapGetters(['feeds']),
     filteredFeedsBySite() {
       return this.$store.getters.feeds.filter(
         feed => feed.site_title === this.$route.params.site

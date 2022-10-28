@@ -1,5 +1,5 @@
 import { IndexState, Feed } from 'types'
-import { MutationTree, GetterTree, ActionTree } from 'vuex'
+import { MutationTree, GetterTree, ActionTree, ActionContext } from 'vuex'
 import { Client } from '@notionhq/client';
 import dayjs from 'dayjs';
 
@@ -20,7 +20,7 @@ export const mutations: MutationTree<IndexState> = {
 }
 
 export const actions: ActionTree<IndexState, RootState> = {
-  async fetchFeeds({ commit }) {
+  nuxtServerInit: async (context: ActionContext<RootState, RootState>) => {
     const notion = new Client({ auth: process.env.NOTION_TOKEN_FEED || '' })
     const res = await notion.databases.query({
       database_id: process.env.DB_NEWS_FEED || '',
@@ -35,6 +35,6 @@ export const actions: ActionTree<IndexState, RootState> = {
         created_at: dayjs(feed.created_time).format("YYYY-MM-DD")
       }
     })
-    commit('setFeeds', feeds)
+    context.commit('setFeeds', feeds)
   },
 }
