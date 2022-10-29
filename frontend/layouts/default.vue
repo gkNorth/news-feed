@@ -6,7 +6,7 @@
         <SiteSlide :sites=getSiteTitles />
         <!-- <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">From the blog</h1> -->
         <div
-        v-touch:swipe.right="() => $router.push(prevSite)"
+          v-touch:swipe.right="() => $router.push(prevSite)"
           v-touch:swipe.left="() => $router.push(nextSite)"
         >
           <nuxt />
