@@ -6,7 +6,7 @@
       rel='noreferrer nofollow noopener'
     >
       <img
-        class="object-cover w-full h-50 rounded-lg lg:w-64"
+        class="object-cover w-full h-50 rounded-lg lg:w-64 aspect-[4/3]"
         :src="feed.page_img !== 'false' ? feed.page_img : require('~/assets/noimage.png')"
       >
     </a>

@@ -26,11 +26,14 @@ export const mutations: MutationTree<IndexState> = {
 
 export const actions: ActionTree<IndexState, RootState> = {
   nuxtServerInit: async (context: ActionContext<RootState, RootState>) => {
+    let feeds: Feed[] = []
     const notionFeeds = new Client({ auth: process.env.NOTION_TOKEN_FEED || '' })
     const resFeeds = await notionFeeds.databases.query({
       database_id: process.env.DB_NEWS_FEED || '',
     })
-    const feeds: Feed[] = resFeeds.results.map( (feed: any) => {
+    let hasMore = resFeeds.has_more
+    let nextCursor = resFeeds.next_cursor
+    const feedsItems: Feed[] = resFeeds.results.map( (feed: any) => {
       return {
         id: feed.id,
         page_title: feed.properties.page_title.title[0].text.content,
@@ -40,6 +43,27 @@ export const actions: ActionTree<IndexState, RootState> = {
         created_at: dayjs(feed.created_time).format("YYYY-MM-DD")
       }
     })
+    feeds = [...feeds, ...feedsItems]
+    while (hasMore) {
+      const resFeeds = await notionFeeds.databases.query({
+        database_id: process.env.DB_NEWS_FEED || '',
+        start_cursor: nextCursor,
+      })
+      const feedsItems: Feed[] = resFeeds.results.map( (feed: any) => {
+        return {
+          id: feed.id,
+          page_title: feed.properties.page_title.title[0].text.content,
+          page_link: feed.properties.page_link.rich_text[0].plain_text,
+          page_img: feed.properties.page_img.rich_text[0].plain_text,
+          site_title: feed.properties.site_title.rich_text[0].plain_text,
+          created_at: dayjs(feed.created_time).format("YYYY-MM-DD")
+        }
+      })
+      feeds = [...feeds, ...feedsItems]
+      hasMore = resFeeds.has_more
+      nextCursor = resFeeds.next_cursor
+    }
+    feeds.sort((a, b) => (a.created_at < b.created_at ? 1 : -1))
     context.commit('setFeeds', feeds)
     
     const notionSites = new Client({ auth: process.env.NOTION_TOKEN_SITE || '' })

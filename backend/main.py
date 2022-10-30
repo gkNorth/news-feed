@@ -23,6 +23,7 @@ for site in sites:
     pageTitleTag = site['properties']['page_title_tag']['rich_text'][0]['plain_text'] if len(site['properties']['page_title_tag']['rich_text']) else ''
     linkType = site['properties']['link_type']['number']
     dateTag = site['properties']['date_tag']['rich_text'][0]['plain_text'] if len(site['properties']['date_tag']['rich_text']) else ''
+    feedType = site['properties']['feed_type']['rich_text'][0]['plain_text'] if len(site['properties']['feed_type']['rich_text']) else ''
 
     newsSite.append(
         SC.ScrapeNews(
@@ -35,7 +36,8 @@ for site in sites:
             imgTag = imgTag,
             pageTitleTag = pageTitleTag,
             linkType = linkType,
-            dateTag = dateTag
+            dateTag = dateTag,
+            feedType = feedType,
         )
     )
 
