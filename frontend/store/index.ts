@@ -1,31 +1,36 @@
-import { IndexState, Feed } from 'types'
+import { IndexState, Feed, Site } from 'types'
 import { MutationTree, GetterTree, ActionTree, ActionContext } from 'vuex'
 import { Client } from '@notionhq/client';
 import dayjs from 'dayjs';
 
 export const state = (): IndexState => ({
   feeds: [] as Feed[],
+  sites: [] as Site[],
 })
 
 export type RootState = ReturnType<typeof state>
 
 export const getters: GetterTree<IndexState, RootState> = {
   feeds: state => state.feeds,
+  sites: state => state.sites,
 }
 
 export const mutations: MutationTree<IndexState> = {
   setFeeds(state: IndexState, feeds: Feed[]): void {
     state.feeds = feeds
   },
+  setSites(state: IndexState, sites: Site[]): void {
+    state.sites = sites
+  },
 }
 
 export const actions: ActionTree<IndexState, RootState> = {
   nuxtServerInit: async (context: ActionContext<RootState, RootState>) => {
-    const notion = new Client({ auth: process.env.NOTION_TOKEN_FEED || '' })
-    const res = await notion.databases.query({
+    const notionFeeds = new Client({ auth: process.env.NOTION_TOKEN_FEED || '' })
+    const resFeeds = await notionFeeds.databases.query({
       database_id: process.env.DB_NEWS_FEED || '',
     })
-    const feeds: Feed[] = res.results.map( (feed: any) => {
+    const feeds: Feed[] = resFeeds.results.map( (feed: any) => {
       return {
         id: feed.id,
         page_title: feed.properties.page_title.title[0].text.content,
@@ -36,5 +41,27 @@ export const actions: ActionTree<IndexState, RootState> = {
       }
     })
     context.commit('setFeeds', feeds)
+    
+    const notionSites = new Client({ auth: process.env.NOTION_TOKEN_SITE || '' })
+    const resSites = await notionSites.databases.query({
+      database_id: process.env.DB_NEWS_SITE || '',
+    })
+    const sites: Site[] = resSites.results.map( (sites: any) => {
+      return {
+        id: sites.id,
+        site_title: sites.properties.site_title.title[0].text.content,
+        url: sites.properties.url.rich_text[0].plain_text,
+        path: sites.properties.path.rich_text[0].plain_text,
+        list_tag: sites.properties.list_tag.rich_text[0].plain_text,
+        item_tag: sites.properties.item_tag.rich_text[0].plain_text,
+        anchor_tag: sites.properties.anchor_tag.rich_text[0].plain_text,
+        img_tag: sites.properties.img_tag.rich_text[0].plain_text,
+        page_title_tag: sites.properties.page_title_tag.rich_text[0].plain_text,
+        link_type: sites.properties.link_type.number,
+        date_tag: sites.properties.date_tag.rich_text[0].plain_text,
+        created_at: dayjs(sites.created_time).format("YYYY-MM-DD"),
+      }
+    })
+    context.commit('setSites', sites)
   },
 }

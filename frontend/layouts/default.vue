@@ -33,7 +33,7 @@ export default Vue.extend({
     TheFooter,
   },
   computed: {
-    ...mapGetters(['feeds']),
+    ...mapGetters(['feeds', 'sites']),
     getSiteTitles() {
       return this.feeds.filter(
         ( feed, index, self ) => self.findIndex(( key ) => key.site_title === feed.site_title) === index
