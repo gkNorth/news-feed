@@ -9,7 +9,7 @@
       </li>
       <li
         v-for="(site, i) in sites"
-        :key="site.i"
+        :key="i"
         class="shrink-0 px-4 py-3"
         :class="[site === $route.params.site ? activeSiteClass : '']"
       >

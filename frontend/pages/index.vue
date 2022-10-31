@@ -17,30 +17,39 @@
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import Card from '~/components/Card.vue'
+import { Feed } from 'types'
+
+export type Data = {
+  allFeeds: Feed[]
+  displayFeeds: Feed[]
+}
 
 export default Vue.extend({
   name: 'IndexPage',
   components: {
     Card,
   },
-  async asyncData({ store }) {
+  data(): Data {
     return {
-      allFeeds: store.getters.feeds,
-      displayFeeds: store.getters.feeds.slice(0, 10)
+      allFeeds: [],
+      displayFeeds: [],
     }
   },
-  computed: {
-    // ...mapGetters(['feeds']),
+  async asyncData({ store }): Promise<Data> {
+    return {
+      allFeeds: store.getters.feeds,
+      displayFeeds: store.getters.feeds.slice(0, 10),
+    }
   },
   methods: {
-    addFeeds() {
-      const nowFeedsLength = this.displayFeeds.length
-      const addFeedsLength = this.displayFeeds.length + 10
-      const addingFeeds = this.$store.getters.feeds.slice(nowFeedsLength, addFeedsLength)
+    addFeeds(): boolean {
+      const nowFeedsLength: number = this.displayFeeds.length
+      const addFeedsLength: number = this.displayFeeds.length + 10
+      const addingFeeds: Feed[] = this.$store.getters.feeds.slice(nowFeedsLength, addFeedsLength)
       this.displayFeeds.push(...addingFeeds)
       return addingFeeds.length >= 10 ? true : false
     },
-    infiniteHandler($state) {
+    infiniteHandler($state: any): void {
       setTimeout(() => {
         const hasFeeds = this.addFeeds()
         hasFeeds ? $state.loaded() : $state.complete()

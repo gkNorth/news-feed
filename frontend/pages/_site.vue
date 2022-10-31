@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapGetters } from 'vuex'
+import { Feed, Site } from 'types'
 import Card from '~/components/Card.vue'
 
 export default Vue.extend({
@@ -31,14 +31,14 @@ export default Vue.extend({
     Card,
   },
   computed: {
-    filteredFeedsBySite() {
+    filteredFeedsBySite(): Feed[] {
       return this.$store.getters.feeds.filter(
-        feed => feed.site_title === this.$route.params.site
+        (feed: Feed) => feed.site_title === this.$route.params.site
       )
     },
-    getSiteUrl() {
+    getSiteUrl(): Site {
       return this.$store.getters.sites.find(
-        site => site.site_title === this.$route.params.site
+        (site: Site) => site.site_title === this.$route.params.site
       )
     }
   }

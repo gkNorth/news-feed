@@ -20,6 +20,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
+import { Feed } from 'types'
 import TheHeader from '~/components/TheHeader.vue'
 import TheFooter from '~/components/TheFooter.vue'
 import Card from '~/components/Card.vue'
@@ -34,18 +35,18 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters(['feeds', 'sites']),
-    getSiteTitles() {
+    getSiteTitles(): string[] {
       return this.feeds.filter(
-        ( feed, index, self ) => self.findIndex(( key ) => key.site_title === feed.site_title) === index
-      ).map(feed => feed.site_title)
+        (feed: Feed, index: number, self: Feed[]) => self.findIndex(( key: Feed ) => key.site_title === feed.site_title) === index
+      ).map((feed: Feed) => feed.site_title)
     },
     currentPageIndex(): number {
-      return this.getSiteTitles.findIndex(site => site === this.$route.params.site)
+      return this.getSiteTitles.findIndex((site: string) => site === this.$route.params.site)
     },
-    prevSite() {
+    prevSite(): string {
       return this.currentPageIndex > 0 ? this.getSiteTitles[this.currentPageIndex - 1] : '/'
     },
-    nextSite() {
+    nextSite(): string {
       return this.currentPageIndex < this.getSiteTitles.length - 1 ? this.getSiteTitles[this.currentPageIndex + 1] : '/'
     },
   }

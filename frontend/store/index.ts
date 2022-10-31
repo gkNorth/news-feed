@@ -45,6 +45,7 @@ export const actions: ActionTree<IndexState, RootState> = {
     })
     feeds = [...feeds, ...feedsItems]
     while (hasMore) {
+      if (nextCursor === null) return
       const resFeeds = await notionFeeds.databases.query({
         database_id: process.env.DB_NEWS_FEED || '',
         start_cursor: nextCursor,
