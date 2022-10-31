@@ -14,7 +14,7 @@
       <span class="text-sm text-gray-500 dark:text-gray-300">{{feed.site_title}}</span>
       <a
         :href="feed.page_link"
-        class="text-base font-semibold text-gray-800 hover:underline dark:text-white"
+        class="text-base break-words font-semibold text-gray-800 hover:underline dark:text-white"
         target='_blank'
         rel='noreferrer nofollow noopener'
       >
