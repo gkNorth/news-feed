@@ -2,7 +2,7 @@
   <div>
     <ul class="flex overflow-auto">
       <li
-        class="shrink-0 px-4 py-3"
+        class="shrink-0 px-4 py-3 dark:text-gray-300"
         :class="[$route.params.site === undefined ? activeSiteClass : '']"
       >
         <nuxt-link to="/">HOME</nuxt-link>
@@ -10,7 +10,7 @@
       <li
         v-for="(site, i) in sites"
         :key="i"
-        class="shrink-0 px-4 py-3"
+        class="shrink-0 px-4 py-3 dark:text-gray-300"
         :class="[site === $route.params.site ? activeSiteClass : '']"
       >
         <nuxt-link :to='`/${site}/`'>{{site}}</nuxt-link>
@@ -32,7 +32,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      activeSiteClass: 'border-b-2 border-cyan-900 text-cyan-900'
+      activeSiteClass: 'border-b-2 border-cyan-900 text-cyan-900 dark:text-gray-300 dark:border-gray-300'
     }
   }
 })
