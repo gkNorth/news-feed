@@ -4,7 +4,7 @@
       <Card
         v-for="feed in displayFeeds"
         :key="feed.id"
-        :feed=feed
+        :feed="feed"
       />
     </div>
     <client-only>
@@ -15,7 +15,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapGetters } from 'vuex'
 import Card from '~/components/Card.vue'
 import { Feed } from 'types'
 

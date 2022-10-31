@@ -4,7 +4,7 @@
       <Card
         v-for="feed in filteredFeedsBySite"
         :key="feed.id"
-        :feed=feed
+        :feed="feed"
       />
     </div>
     <div class="fixed bottom-1 right-1 flex justify-center align-middle p-3 bg-gray-600 opacity-80 rounded">
