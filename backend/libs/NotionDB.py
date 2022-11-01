@@ -6,12 +6,26 @@ class NotionDB:
         self.db_id = envDb
 
     def getValues(self):
+        feeds = []
         db = self.notion.databases.query(
             **{
                 'database_id' : self.db_id
             }
         )
-        return db['results']
+        feeds = [* db['results']]
+        hasMore = db['has_more']
+        nextCursor = db['next_cursor']
+        while hasMore:
+            db = self.notion.databases.query(
+                **{
+                    'database_id' : self.db_id,
+                    'start_cursor': nextCursor,
+                }
+            )
+            feeds = [* feeds, * db['results']]
+            hasMore = db['has_more']
+            nextCursor = db['next_cursor']
+        return feeds
 
 class Feed(NotionDB):
     def __init__(self, envToken, envDb):

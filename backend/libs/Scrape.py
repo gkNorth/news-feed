@@ -39,7 +39,8 @@ class ScrapeNews:
             for el in newsListHTML['data']['notes']: #jsonサイト追加する場合dataを動的にする必要あるかも
                 pageTitle = el['name']
                 pageLink = el['note_url']
-                pageImg = el['eyecatch']
+                # pageImg = el['eyecatch']
+                pageImg = 'false'
                 newsList.append(
                     {
                         'siteTitle' : self.siteTitle,

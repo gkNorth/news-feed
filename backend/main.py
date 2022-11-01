@@ -74,14 +74,3 @@ for scrapeNews in scrapeNewsList:
 
 finishedMessage = '{}件の更新がありました'.format(len(scrapeNewsList)) if len(scrapeNewsList) > 0 else '更新はありませんでした'
 print(finishedMessage)
-
-# for registerNews in registerNewsList:
-#     FEED.postFeed(registerNews['pageTitle'], registerNews['pageLink'], registerNews['pageImg'], registerNews['siteTitle'])
-
-# scrapedNews = SCRAPENEWS.getNews()
-
-# pprint(sites)
-
-# newsTitle = SC.scrapeNews()
-
-# libs.feed.postFeed(newsTitle)

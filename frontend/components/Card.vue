@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a
+    <!-- <a
       :href="feed.page_link"
       target='_blank'
       rel='noreferrer nofollow noopener'
@@ -9,7 +9,7 @@
         class="object-cover w-full h-50 rounded-lg lg:w-64 aspect-[4/3]"
         :src="feed.page_img !== 'false' ? feed.page_img : require('~/assets/noimage.png')"
       >
-    </a>
+    </a> -->
     <div class="flex flex-col justify-between py-2 lg:mx-6">
       <span class="text-sm text-gray-500 dark:text-gray-300">{{feed.site_title}}</span>
       <a
