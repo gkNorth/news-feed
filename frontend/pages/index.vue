@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mt-3 md:mt-16 md:grid-cols-3 px-6">
+    <div class="mt-3 md:mt-16 md:grid-cols-3 px-4">
       <Card
         v-for="feed in displayFeeds"
         :key="feed.id"

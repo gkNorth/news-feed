@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="flex justify-center align-middle py-3 bg-cyan-900">
+    <div class="flex justify-center items-center py-3 bg-cyan-900">
       <nuxt-link
         to="/"
         class="text-white text-lg font-bold"

@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <div class="flex justify-center align-middle p-4 bg-cyan-900">
+    <div class="flex justify-center items-center p-4 bg-cyan-900">
       <p class="text-white text-lg">
         ©︎gk-fe.com
       </p>

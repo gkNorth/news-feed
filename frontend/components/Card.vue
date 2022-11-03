@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="card bg-neutral-100 px-3 py-1 mb-2 rounded-md relative">
+    <span class="absolute top-1 right-2 text-sm">{{feed.emoji}}</span>
     <!-- <a
       :href="feed.page_link"
       target='_blank'
@@ -11,7 +12,15 @@
       >
     </a> -->
     <div class="flex flex-col justify-between py-2 lg:mx-6">
-      <span class="text-sm text-gray-500 dark:text-gray-300">{{feed.site_title}}</span>
+      <div class="flex items-center gap-3">
+        <span class="text-sm text-gray-500 dark:text-gray-300">{{feed.site_title}}</span>
+        <span
+          v-if="isNew"
+          class="text-sm text-red-500 dark:text-orange-600"
+        >
+            New
+        </span>
+      </div>
       <a
         :href="feed.page_link"
         class="text-base break-words font-semibold text-gray-800 hover:underline dark:text-white"
@@ -26,7 +35,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { PropOptions } from 'vue';
+import { Feed } from 'types'
+import dayjs from 'dayjs';
 
 export default Vue.extend({
   name: 'Card',
@@ -34,6 +45,13 @@ export default Vue.extend({
     feed: {
       type: Object,
       required: true
+    } as PropOptions<Feed>
+  },
+  computed: {
+    isNew(): boolean {
+      const created_at: string = this.feed.created_at
+      const today: string = dayjs(new Date()).format("YYYY-MM-DD")
+      return created_at === today
     }
   }
 })

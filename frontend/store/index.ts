@@ -34,13 +34,15 @@ export const actions: ActionTree<IndexState, RootState> = {
     let hasMore = resFeeds.has_more
     let nextCursor = resFeeds.next_cursor
     const feedsItems: Feed[] = resFeeds.results.map( (feed: any) => {
+      const emoji = createEmoji()
       return {
         id: feed.id,
         page_title: feed.properties.page_title.title[0].text.content,
         page_link: feed.properties.page_link.rich_text[0].plain_text,
         page_img: feed.properties.page_img.rich_text[0].plain_text,
         site_title: feed.properties.site_title.rich_text[0].plain_text,
-        created_at: dayjs(feed.created_time).format("YYYY-MM-DD")
+        created_at: dayjs(feed.created_time).format("YYYY-MM-DD"),
+        emoji: emoji
       }
     })
     feeds = [...feeds, ...feedsItems]
@@ -51,13 +53,15 @@ export const actions: ActionTree<IndexState, RootState> = {
         start_cursor: nextCursor,
       })
       const feedsItems: Feed[] = resFeeds.results.map( (feed: any) => {
+        const emoji = createEmoji()
         return {
           id: feed.id,
           page_title: feed.properties.page_title.title[0].text.content,
           page_link: feed.properties.page_link.rich_text[0].plain_text,
           page_img: feed.properties.page_img.rich_text[0].plain_text,
           site_title: feed.properties.site_title.rich_text[0].plain_text,
-          created_at: dayjs(feed.created_time).format("YYYY-MM-DD")
+          created_at: dayjs(feed.created_time).format("YYYY-MM-DD"),
+          emoji: emoji
         }
       })
       feeds = [...feeds, ...feedsItems]
@@ -89,4 +93,10 @@ export const actions: ActionTree<IndexState, RootState> = {
     })
     context.commit('setSites', sites)
   },
+}
+
+export const createEmoji = () => {
+  const emojiCode: number = 
+    Math.random()*10 > 7.75 ? Math.floor(Math.random()) * (128592 - 128512) + 128512 : Math.floor(Math.random() * (128318 - 127744) + 127744)
+  return String.fromCodePoint(emojiCode)
 }
