@@ -19,6 +19,11 @@ export const mutations: MutationTree<IndexState> = {
   setFeeds(state: IndexState, feeds: Feed[]): void {
     state.feeds = feeds
   },
+  updateFeed(state: IndexState, { favorite, targetFeed }): void {
+    const target = state.feeds.find(feed => feed.id === targetFeed.id)
+    if (!target) return
+    target.favorite = favorite
+  },
   setSites(state: IndexState, sites: Site[]): void {
     state.sites = sites
   },
@@ -41,6 +46,7 @@ export const actions: ActionTree<IndexState, RootState> = {
         page_link: feed.properties.page_link.rich_text[0].plain_text,
         page_img: feed.properties.page_img.rich_text[0].plain_text,
         site_title: feed.properties.site_title.rich_text[0].plain_text,
+        favorite: feed.properties.favorite.checkbox,
         created_at: dayjs(feed.created_time).format("YYYY-MM-DD"),
         emoji: emoji
       }
@@ -60,6 +66,7 @@ export const actions: ActionTree<IndexState, RootState> = {
           page_link: feed.properties.page_link.rich_text[0].plain_text,
           page_img: feed.properties.page_img.rich_text[0].plain_text,
           site_title: feed.properties.site_title.rich_text[0].plain_text,
+          favorite: feed.properties.favorite.checkbox,
           created_at: dayjs(feed.created_time).format("YYYY-MM-DD"),
           emoji: emoji
         }
@@ -93,6 +100,9 @@ export const actions: ActionTree<IndexState, RootState> = {
     })
     context.commit('setSites', sites)
   },
+  updateFavorite(context, { favorite, targetFeed }) {
+    context.commit('updateFeed', {favorite, targetFeed})
+  }
 }
 
 export const createEmoji = () => {

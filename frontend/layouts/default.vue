@@ -12,6 +12,14 @@
           <nuxt />
         </div>
       </div>
+      <div class="fixed bottom-1 left-1 flex justify-center items-center p-3 bg-red-400 opacity-70 rounded">
+        <nuxt-link
+          to="/favorite"
+          class="text-base font-semibold hover:underline text-white"
+        >
+          Go Favorite Page
+        </nuxt-link>
+      </div>
     </section>
     <TheFooter />
   </div>

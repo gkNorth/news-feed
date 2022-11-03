@@ -9,6 +9,7 @@ export interface Feed {
   page_link: string
   page_img: string
   site_title: string
+  favorite: boolean
   created_at: string
   emoji: string
 }
