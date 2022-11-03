@@ -56,7 +56,7 @@ export default {
   },
   
   serverMiddleware: [
-    { path: '/server-middleware-toggleFavorite', handler: '~/serverMiddleware/toggleFavorite' }
+    { path: '/server-middleware-toggleFavorite', handler: '~/serverMiddleware/toggleFavorite.ts' }
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
