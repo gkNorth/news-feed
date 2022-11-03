@@ -1,5 +1,5 @@
 <template>
-  <div class="card bg-neutral-100 px-3 py-1 mb-2 rounded-md relative">
+  <div class="card bg-neutral-100 px-3 py-1 mb-2 rounded-md relative dark:bg-zinc-900">
     <span class="absolute top-1 right-2 text-sm">{{feed.emoji}}</span>
     <!-- <a
       :href="feed.page_link"
