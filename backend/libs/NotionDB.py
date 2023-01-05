@@ -15,16 +15,16 @@ class NotionDB:
         feeds = [* db['results']]
         hasMore = db['has_more']
         nextCursor = db['next_cursor']
-        while hasMore:
-            db = self.notion.databases.query(
-                **{
-                    'database_id' : self.db_id,
-                    'start_cursor': nextCursor,
-                }
-            )
-            feeds = [* feeds, * db['results']]
-            hasMore = db['has_more']
-            nextCursor = db['next_cursor']
+        # while hasMore:
+        #     db = self.notion.databases.query(
+        #         **{
+        #             'database_id' : self.db_id,
+        #             'start_cursor': nextCursor,
+        #         }
+        #     )
+        #     feeds = [* feeds, * db['results']]
+        #     hasMore = db['has_more']
+        #     nextCursor = db['next_cursor']
         return feeds
 
 class Feed(NotionDB):
